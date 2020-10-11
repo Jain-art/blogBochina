@@ -2,9 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using blogBochina.Domain.DB;
+using blogBochina.Infrastructure;
+using blogBochina.Infrastructure.Guarantiors;
+using blogBochina.Infrastructure.Guarantors;
+using blogBochina.Model.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,12 +30,58 @@ namespace blogBochina
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            services.AddDbContext<BlogDbContext>(options =>
+                options.UseNpgsql("Server=127.0.0.1;Port=5432;User Id=postgres;Password=1234;Database=Blog;"));
+
             services.AddControllersWithViews();
+
+            var sevisceProvider = services.BuildServiceProvider();
+            var guarantor = new SeedDataGuarantor(sevisceProvider);
+            guarantor.EnsureAsync();
+
+
+            
+
+            services.AddControllersWithViews();
+
+
+
+            services.AddIdentity<User, IdentityRole<int>>(options =>
+                 {
+                     options.Password.RequireLowercase = false;
+                     options.Password.RequireUppercase = false;
+                     options.Password.RequireNonAlphanumeric = false;
+                     options.Password.RequireDigit = false;
+
+                 }).AddEntityFrameworkStores<BlogDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using(var scope=app.ApplicationServices.CreateScope())
+            {
+                var guarantors = scope.ServiceProvider.GetServices<IStartupPreConditionGuarantor>();
+                try
+                {
+                    Console.WriteLine("Startup guarantors sterted");
+                    foreach (var guarantor in guarantors)
+                    
+                        guarantor.Ensure(scope.ServiceProvider);
+                    
+                    Console.WriteLine("Startup guarantors executed successful");
+                }
+                catch (StartupPreConditionException)
+                {
+                    Console.WriteLine("Startup guarators failed");
+                    throw;
+                }
+
+            }
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

@@ -17,20 +17,27 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-					<ul class="navbar-nav flex-grow-1">
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная страница</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Регестрация</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Index">Рецепты</a>
-						</li>
-					</ul>
+                    <ul class="navbar-nav flex-grow-1">
+                         @if (SignInManager.IsSignedIn(User))
+                         {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная страница</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Регестрация</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Index">Рецепты</a>
+                        </li>
+                         }
+                     </ul>
                 </div>
             </div>
-        </nav>
+            <div class="collapse navbar-collapse justify-content-end">
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
+           
+                   </nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">

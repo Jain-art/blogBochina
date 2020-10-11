@@ -1,6 +1,6 @@
 using System;
 
-namespace blogBochina.Models
+namespace blogBochina.Domain.Model
 {
     public class ErrorViewModel
     {
