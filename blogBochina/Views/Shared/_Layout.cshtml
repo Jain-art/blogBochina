@@ -18,8 +18,8 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                         @if (SignInManager.IsSignedIn(User))
-                         {
+                        @if (User.Identity.IsAuthenticated)
+                        {
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная страница</a>
                         </li>
@@ -29,8 +29,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Index">Рецепты</a>
                         </li>
-                         }
-                     </ul>
+                        }
+                    </ul>
                 </div>
             </div>
             <div class="collapse navbar-collapse justify-content-end">

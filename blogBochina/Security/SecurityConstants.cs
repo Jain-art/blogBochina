@@ -13,15 +13,15 @@ namespace blogBochina.Security
         /// <summary>
         /// Администратор
         /// </summary>
-        public const string AdminRole = "Admin";
+        public const string AdminRole = "ADMIN";
         /// <summary>
         /// пользователь
         /// </summary>
-        public const string CostomerRoel = "Costomer";
+        public const string CostomerRoel = "CUSTOMER";
         /// <summary>
         /// Логин администратора
         /// </summary>
-        public const string AdminUserRole = "Admin";
+        public const string AdminUserRole = "ADMIN";
         /// <summary>
         /// Пароль администратора
         /// </summary>

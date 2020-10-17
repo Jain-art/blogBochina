@@ -36,17 +36,8 @@ namespace blogBochina
 
             services.AddControllersWithViews();
 
-            var sevisceProvider = services.BuildServiceProvider();
-            var guarantor = new SeedDataGuarantor(sevisceProvider);
-            guarantor.EnsureAsync();
-
-
-            
-
+           
             services.AddControllersWithViews();
-
-
-
             services.AddIdentity<User, IdentityRole<int>>(options =>
                  {
                      options.Password.RequireLowercase = false;
@@ -55,6 +46,10 @@ namespace blogBochina
                      options.Password.RequireDigit = false;
 
                  }).AddEntityFrameworkStores<BlogDbContext>();
+
+            var sevisceProvider = services.BuildServiceProvider();
+            var guarantor = new SeedDataGuarantor(sevisceProvider);
+            guarantor.EnsureAsync();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,9 +74,9 @@ namespace blogBochina
                 }
 
             }
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseRouting();
+            //app.UseAuthentication();
+            //app.UseAuthorization();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -96,7 +91,7 @@ namespace blogBochina
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
