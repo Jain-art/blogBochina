@@ -1,0 +1,46 @@
+﻿@model NewPostViewModel
+@{
+    ViewData["Title"] = "Добавить новый пост";
+    Layout = "_LoginLayout";
+}
+
+<form asp-action="AddPost" method="post">
+    <div class="card-body">
+        <!--div asp-validation-summary="All" class="text-danger"></!div-->
+
+
+        <div class="form-group bmd-form-group">
+            <label asp-for="Title" class="bmd-label-floating"></label>
+            <input asp-for="Title" class="form-control" placeholder="Заголовок поста">
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group bmd-form-group">
+            <label asp-for="Data" class="bmd-label-floating"></label>
+            <input asp-for="Data" class="form-control" placeholder="Текст поста">
+            <!--textarea asp-for="Data" class="form-control" placeholder="Текст поста" cols="50" rows="5"> </!--textarea></textarea-->
+            <span asp-validation-for="Data" class="text-danger"></span>
+        </div>
+
+        <div class="form-group bmd-form-group">
+            <label asp-for="Owner" class="bmd-label-floating"></label>
+            <input  asp-for="Owner" class="form-control" placeholder="Автор поста" >
+            <!--textarea asp-for="Data" class="form-control" placeholder="Текст поста" cols="50" rows="5"> </!--textarea></textarea-->
+            <span asp-validation-for="Owner" class="text-danger"></span>
+        </div>
+        <div class="form-group bmd-form-group">
+            <label asp-for="Created" class="bmd-label-floating"></label>
+            <input   asp-for="Created" class="form-control" placeholder="Пост добавлен в ">
+            <!--textarea asp-for="Data" class="form-control" placeholder="Текст поста" cols="50" rows="5"> </!--textarea></textarea-->
+            <span asp-validation-for="Created" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="card-footer justify-content-center">
+        <button type="submit" class="btn btn-primary btn-fill btn-lg">Опубликовать пост</button>
+    </div>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationPost")
+}

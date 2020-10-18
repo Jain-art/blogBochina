@@ -1,7 +1,12 @@
-﻿
+﻿@model List<string>
 @{
-	ViewData["Title"] = "Кулинария для всех";
+    ViewData["Title"] = "Кулинария для всех";
 }
-	<div class="text-center">
-		<h3 class="display-4">Знаешь вкусный рецепт? Поделись с другими;)</h3>
-	</div>
+<div class="text-center">
+    <h3 class="display-4">Знаешь вкусный рецепт? Поделись с другими;)</h3>
+</div>
+
+@foreach (string text in Model)
+{
+    <p>@text</p>
+}
